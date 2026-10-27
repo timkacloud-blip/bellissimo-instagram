@@ -37,6 +37,23 @@ def short(cap, n=160):
 ACC_NUM = [c for c in (rows('account_daily.csv')[:1] or [{}])[0].keys() if c != 'date']
 acc = [[r['date']] + [num(r.get(c)) for c in ACC_NUM] for r in rows('account_daily.csv')]
 
+CYR_UZ = set('ўқғҳЎҚҒҲ')
+UZ_W = re.compile(r"(?i)\b(ва|учун|билан|бизнинг|сиз|ёки|ҳам)\b")
+def lang(cap):
+    t = re.sub(r'@\w+|#\w+|https?://\S+', '', cap or '')
+    cyr = len(re.findall('[А-Яа-яЁёЎўҚқҒғҲҳ]', t)); lat = len(re.findall('[A-Za-z]', t))
+    if cyr + lat < 15: return 'Без текста'
+    uzc = cyr and (any(c in CYR_UZ for c in t) or UZ_W.search(t))
+    if lat >= 3 * cyr: return 'Узбекский'
+    if cyr >= 3 * lat: return 'Узбекский' if uzc else 'Русский'
+    return 'Узб. + рус.'
+CTA = re.compile(r"buyurtma|zakaz|zakaj|ilova|prilojen|yuklab|skachai|havola|ssylk|link|profil|o'ting|bosing|najmi|perehod|oformi|заказ|приложен|ссылк|скачай|переход|оформи")
+PROMO = re.compile(r"promokod|promo kod|промокод|promo-kod")
+ADS = {r['id']: r for r in rows('ads_media.csv')}
+HIST = {}
+for r in rows('media_hist.csv'):
+    HIST.setdefault(r['id'], []).append([int(r['age_h']), num(r['reach'])])
+
 posts = []
 for r in rows('media.csv'):
     t = r['id'] in have_thumb
@@ -44,7 +61,11 @@ for r in rows('media.csv'):
     posts.append({'id': r['id'], 'ts': r['ts'], 'fmt': FMT.get((r['product'], r['media_type']), r['media_type'].title()), 'rub': rubric(r['caption']),
                   'cap': short(r['caption']), 'url': r['permalink'], 'th': t,
                   **{k: num(r.get(k)) for k in ('reach', 'views', 'likes', 'comments', 'saved', 'shares', 'reposts', 'total_interactions', 'profile_visits', 'follows')},
-                  'watch': round(num(r.get('avg_watch_ms')) / 1000, 1) if num(r.get('avg_watch_ms')) else None})
+                  'watch': round(num(r.get('avg_watch_ms')) / 1000, 1) if num(r.get('avg_watch_ms')) else None,
+                  'lang': lang(r['caption']), 'cta': bool(CTA.search(norm(r['caption']) + ' ' + (r['caption'] or '').lower())),
+                  'promo': bool(PROMO.search((r['caption'] or '').lower())), 'clen': len(r['caption'] or ''),
+                  'ad': {k: num(ADS[r['id']][k]) for k in ('ads', 'spend', 'reach', 'impressions', 'clicks')} if r['id'] in ADS else None,
+                  'hist': sorted(HIST.get(r['id'], []))})
 
 stories = []
 for r in rows('stories.csv'):
@@ -53,15 +74,18 @@ for r in rows('stories.csv'):
     stories.append({'id': r['id'], 'ts': r['ts'], 'type': r['media_type'], 'th': t,
                     **{k: num(r.get(k)) for k in ('reach', 'views', 'replies', 'shares', 'total_interactions', 'follows', 'profile_visits', 'tap_forward', 'tap_back', 'tap_exit', 'swipe_forward')}})
 
+QW = re.compile(r"\?|(?<![a-z'])(qancha|narx|qayerda|qachon|qanday|qaysi|mumkinmi|bormi|ishlaydimi|qachongacha|skolko|gde|kogda|kak |pochemu|mojno|est li)")
 comments = [{'ts': r['ts'], 'm': r['media_id'], 'tx': r['text'], 'tone': r['tone'], 'th': [x for x in r['themes'].split('|') if x],
+             'q': bool(QW.search(norm(r['text']))) and r['tone'] != 'pos',
              'ans': r['answered'] == '1', 'am': num(r['answer_min']), 'lk': num(r['likes'])} for r in rows('comments.csv')]
 
 tags = [{'ts': r['ts'], 'u': r['username'], 'url': r['permalink'], 'type': r['media_type'], 'lk': num(r['likes']), 'cm': num(r['comments']),
          'cap': short(r['caption'], 120)} for r in rows('tags.csv')]
 
 comp_daily = [{'d': r['date'], 'u': r['username'], 'n': r['name'], 'f': num(r['followers']), 'mc': num(r['media_count'])} for r in rows('comp_daily.csv')]
+OFFER = re.compile(r"aksiya|chegirma|promokod|bonus|sovg'a|sovga|bepul|keshbek|cashback|акци|скидк|промокод|бонус|подар|бесплатн|1\+1|2\+1|%")
 comp_media = [{'u': r['username'], 'ts': r['ts'], 'p': r['product'], 'lk': num(r['likes']), 'cm': num(r['comments']), 'url': r['permalink'],
-               'cap': short(r['caption'], 140)} for r in rows('comp_media.csv')]
+               'cap': short(r['caption'], 140), 'of': bool(OFFER.search(norm(r['caption']) + ' ' + (r['caption'] or '').lower()))} for r in rows('comp_media.csv')]
 
 fol = [[r['date'], num(r['followers'])] for r in rows('followers.csv')]
 aud = json.load(open(os.path.join(DATA, 'audience.json'), encoding='utf-8')) if os.path.exists(os.path.join(DATA, 'audience.json')) else {}

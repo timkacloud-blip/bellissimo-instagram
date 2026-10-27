@@ -132,6 +132,8 @@ REN = {'ig_reels_avg_watch_time': 'avg_watch_ms', 'ig_reels_video_view_total_tim
 
 @block('media')
 def media():
+    global HIST
+    HIST = rcsv('media_hist.csv', 'k')
     rows = rcsv('media.csv', 'id')
     cut = (NOW - dt.timedelta(days=CFG['media_days'])).isoformat()
     ref = (NOW - dt.timedelta(days=CFG['media_refresh_days'])).isoformat()
@@ -157,11 +159,16 @@ def media():
                 x = get(m['id'] + '/insights', metric=REEL_M if r['product'] == 'REELS' else FEED_M)
                 for v in x['data']: r[REN.get(v['name'], v['name'])] = (v.get('values') or [{}])[0].get('value', 0)
                 r['updated'] = TODAY; n_ins += 1
+                age = (NOW - dt.datetime.fromisoformat(ts)).total_seconds() / 3600
+                if age <= 24 * 14:
+                    HIST[m['id'] + '|' + str(int(age))] = {'k': m['id'] + '|' + str(int(age)), 'id': m['id'], 'age_h': int(age), 'at': NOW.isoformat(timespec='minutes'),
+                        **{k: r.get(k, '') for k in ('reach', 'views', 'likes', 'comments', 'saved', 'shares', 'total_interactions')}}
             except Exception as e:
                 print('insights fail', m['id'], str(e)[:100])
         thumb(m['id'], m.get('thumbnail_url') or m.get('media_url'))
         rows[m['id']] = r
     wcsv('media.csv', rows.values(), MED_COLS, 'ts')
+    wcsv('media_hist.csv', HIST.values(), ['k', 'id', 'age_h', 'at', 'reach', 'views', 'likes', 'comments', 'saved', 'shares', 'total_interactions'], 'k')
     json.dump([m['id'] for m in lst], open(os.path.join(DATA, '.media_ids.json'), 'w'))
     return {'posts': len(rows), 'insights_updated': n_ins}
 
@@ -264,9 +271,39 @@ def competitors():
     if len(ok) < 2: raise RuntimeError('собрано аккаунтов: %d' % len(ok))
     return {'accounts': len(ok)}
 
+# ---------- реклама с публикаций (из рекламного кабинета) ----------
+@block('ads')
+def ads():
+    agg = {}
+    d = get(CFG['ad_account'] + '/ads', fields='id,creative{effective_instagram_media_id,source_instagram_media_id},'
+            'insights.date_preset(maximum){spend,reach,impressions,clicks}', limit=200)
+    n = 0
+    while True:
+        for a in d.get('data', []):
+            n += 1; c = a.get('creative') or {}
+            mid = c.get('source_instagram_media_id') or c.get('effective_instagram_media_id')
+            ins = ((a.get('insights') or {}).get('data') or [None])[0]
+            if not mid or not ins: continue
+            x = agg.setdefault(mid, {'id': mid, 'ads': 0, 'spend': 0.0, 'reach': 0, 'impressions': 0, 'clicks': 0})
+            x['ads'] += 1; x['spend'] += float(ins.get('spend', 0)); x['reach'] += int(ins.get('reach', 0))
+            x['impressions'] += int(ins.get('impressions', 0)); x['clicks'] += int(ins.get('clicks', 0))
+        nxt = (d.get('paging') or {}).get('next')
+        if not nxt: break
+        for i in range(3):
+            try: d = requests.get(nxt, timeout=120).json(); break
+            except Exception: time.sleep(15)
+        if 'error' in d: raise RuntimeError(d['error'].get('message', '')[:200])
+    own = set(rcsv('media.csv', 'id'))
+    agg = {k: v for k, v in agg.items() if k in own}   # только опубликованные в ленте посты, не «тёмные» рекламные
+    for x in agg.values(): x['spend'] = round(x['spend'], 2)
+    wcsv('ads_media.csv', agg.values(), ['id', 'ads', 'spend', 'reach', 'impressions', 'clicks'], 'id')
+    return {'ads_checked': n, 'posts_in_ads': len(agg)}
+
+HIST = {}
+
 if __name__ == '__main__':
     only = sys.argv[1:]
-    for name, fn in [('account', account), ('media', media), ('stories', stories), ('audience', audience), ('comments', comments), ('tags', tags), ('competitors', competitors)]:
+    for name, fn in [('account', account), ('media', media), ('stories', stories), ('audience', audience), ('comments', comments), ('tags', tags), ('competitors', competitors), ('ads', ads)]:
         if not only or name in only: fn()
     STATUS['finished'] = dt.datetime.now(TZ).isoformat(timespec='minutes')
     prev = {}

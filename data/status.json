@@ -1,43 +1,49 @@
 {
- "started": "2026-10-27T22:33+05:00",
+ "started": "2026-10-27T23:14+05:00",
  "blocks": {
   "stories": {
    "ok": true,
    "live_now": 5,
    "total": 5,
-   "sec": 13
+   "sec": 9
   },
   "audience": {
    "ok": true,
-   "sec": 7
+   "sec": 3
   },
   "tags": {
    "ok": true,
    "tags": 106,
-   "sec": 26
+   "sec": 19
   },
   "competitors": {
    "ok": true,
    "accounts": 6,
-   "sec": 10
+   "sec": 4
   },
   "media": {
    "ok": true,
    "posts": 143,
-   "insights_updated": 111,
-   "sec": 112
+   "insights_updated": 20,
+   "sec": 10
   },
   "account": {
    "ok": true,
-   "days_fetched": 346,
-   "followers": 276309,
-   "sec": 719
+   "days_fetched": 4,
+   "followers": 276312,
+   "sec": 10
   },
   "comments": {
    "ok": true,
    "comments": 1934,
-   "sec": 82
+   "sec": 39
+  },
+  "ads": {
+   "ok": true,
+   "ads_checked": 1414,
+   "posts_in_ads": 45,
+   "sec": 54
   }
  },
- "finished": "2026-10-27T22:49+05:00"
+ "finished": "2026-10-27T23:17+05:00"
 }

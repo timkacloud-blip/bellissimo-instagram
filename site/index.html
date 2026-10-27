@@ -20,7 +20,7 @@ td,.tile .v,.num{font-variant-numeric:tabular-nums}
 button,select{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--g);outline-offset:2px}
 a{color:var(--g)}
-header{position:sticky;top:0;z-index:20;background:#fff;margin:0 -16px;padding:12px 16px 0;border-bottom:1px solid var(--line)}
+header{position:relative;z-index:20;background:#fff;margin:0 -16px;padding:12px 16px 0;border-bottom:1px solid var(--line)}
 .hrow{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
 .logo svg{height:30px;width:auto;display:block}
 .ttl{display:flex;flex-direction:column;margin-right:auto}
@@ -107,6 +107,18 @@ td.cap b{color:var(--fg)}
 .pcd .top .meta .c{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .cm .it .meta{font-size:11.5px;color:var(--fg2);margin-top:4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 select{border:1px solid var(--line);border-radius:9px;padding:6px 8px;background:#fff;font-size:13px}
+.rng{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.dts{display:inline-flex;align-items:center;gap:6px;color:var(--fg2)}
+input[type=date]{border:1px solid var(--line);border-radius:9px;padding:5px 8px;background:#fff;font:inherit;font-size:13px}
+.cmpl{font-size:12px;color:var(--fg2);margin-top:6px}
+.qs{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px}
+.qc{border:1px solid var(--line);border-radius:14px;padding:14px}
+.qc h3{margin:0 0 4px;font-size:14px}
+.qc .ans{font-size:13px;margin-bottom:10px}
+.qc .ans b{color:var(--g)}
+.qc.na .ans b{color:var(--amber)}
+[data-tip]{cursor:help}
+@media (max-width:640px){.qs{grid-template-columns:1fr}.rng .seg button{padding:5px 8px}}
 .foot{margin-top:24px;color:var(--fg3);font-size:12px}
 @media (max-width:640px){.tile .v{font-size:21px}.hbr{grid-template-columns:96px minmax(0,1fr) 92px}.card{padding:14px}.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
@@ -117,38 +129,39 @@ select{border:1px solid var(--line);border-radius:9px;padding:6px 8px;background
   <div class="hrow">
     <div class="logo"><!--LOGO--></div>
     <div class="ttl"><b>Instagram</b><span id="stamp"></span></div>
+    <div class="rng"><div class="seg" id="pre"><button data-p="7">7 дней</button><button data-p="30">30 дней</button><button data-p="tm">Этот месяц</button><button data-p="pm">Прошлый месяц</button><button data-p="90">90 дней</button><button data-p="365">Год</button></div>
+      <span class="dts"><input type="date" id="d-a" aria-label="С"> — <input type="date" id="d-b" aria-label="По"></span></div>
   </div>
+  <div class="cmpl" id="cmp"></div>
   <nav class="tabs" id="tabs">
-    <button data-t="wk">Неделя<small>для SMM</small></button><button data-t="mo">Месяц<small>для руководства</small></button>
+    <button data-t="wk">Обзор<small>для SMM</small></button><button data-t="mo">Итоги<small>для руководства</small></button>
     <button data-t="ct">Контент<small>что работает</small></button><button data-t="st">Сторис<small>&nbsp;</small></button>
-    <button data-t="au">Аудитория и комментарии<small>&nbsp;</small></button><button data-t="cp">Конкуренты<small>&nbsp;</small></button>
+    <button data-t="au">Комментарии и аудитория<small>&nbsp;</small></button><button data-t="cp">Конкуренты<small>&nbsp;</small></button>
   </nav>
 </header>
 
 <!-- НЕДЕЛЯ -->
 <section class="panel" id="p-wk">
-  <div class="bar0"><b id="wk-range"></b><span class="note">Сравнение с предыдущими 7 днями. Цифры постов младше 2 дней ещё растут.</span></div>
   <div class="tiles" id="wk-tiles"></div>
-  <div class="card c7"><div class="chd"><h2>Выводы недели</h2></div><ul class="keys" id="wk-keys"></ul></div>
+  <div class="card c7"><div class="chd"><h2>Выводы</h2></div><ul class="keys" id="wk-keys"></ul></div>
   <div class="card c5"><div class="chd"><h2>Ответить</h2><span class="sub">негатив и вопросы без нашего ответа, 14 дней</span></div><div class="cm" id="wk-reply"></div></div>
-  <div class="card"><div class="chd"><h2>Публикации недели</h2><span class="sub">оценка — сравнение с обычным охватом этого формата за 90 дней</span></div><div class="pcards" id="wk-posts"></div></div>
-  <div class="card"><div class="chd"><h2>Сторис недели</h2><span class="sub">сколько людей доходят от первой сторис дня до последней</span></div><div class="tbl" id="wk-st"></div></div>
+  <div class="card"><div class="chd"><h2>Публикации за период</h2><span class="sub">оценка — сравнение с обычным охватом этого формата за 90 дней · цифры постов младше 2 дней ещё растут</span></div><div class="pcards" id="wk-posts"></div></div>
+  <div class="card"><div class="chd"><h2>Серии сторис</h2><span class="sub">сколько людей доходят от первой сторис дня до последней</span></div><div class="tbl" id="wk-st"></div></div>
 </section>
 
 <!-- МЕСЯЦ -->
 <section class="panel" id="p-mo" hidden>
-  <div class="bar0"><select id="mo-sel"></select><span class="note" id="mo-note"></span></div>
   <div class="tiles" id="mo-tiles"></div>
-  <div class="card c7"><div class="chd"><h2>Итоги месяца</h2></div><ul class="keys" id="mo-keys"></ul></div>
-  <div class="card c5"><div class="chd"><h2>Лучшие публикации месяца</h2><span class="sub">по органическому охвату</span></div><div class="grid" id="mo-top"></div></div>
-  <div class="card"><div class="chd"><h2>Просмотры своего контента по неделям</h2><span class="sub">без рекламы, последние 26 недель</span></div><div class="legend" id="lg-mo"></div><div class="chart" id="ch-mo"></div></div>
+  <div class="card c7"><div class="chd"><h2>Итоги</h2></div><ul class="keys" id="mo-keys"></ul></div>
+  <div class="card c5"><div class="chd"><h2>Лучшие публикации</h2><span class="sub">по органическому охвату</span></div><div class="grid" id="mo-top"></div></div>
+  <div class="card"><div class="chd"><h2>Просмотры своего контента по неделям</h2><span class="sub" id="mo-ch-sub">без рекламы</span></div><div class="legend" id="lg-mo"></div><div class="chart" id="ch-mo"></div></div>
   <div class="card"><div class="chd"><h2>Реклама и свой контент по неделям</h2><span class="sub">все просмотры аккаунта</span></div><div class="legend" id="lg-mo-ad"></div><div class="chart" id="ch-mo-ad"></div></div>
 </section>
 
 <!-- КОНТЕНТ -->
 <section class="panel" id="p-ct" hidden>
-  <div class="bar0"><div class="seg" id="ct-per"><button data-p="30">30 дней</button><button data-p="90">90 дней</button><button data-p="365">Год</button></div><span class="note" id="ct-note"></span></div>
-  <div class="card"><div class="chd"><h2>Что влияет на охват</h2><span class="sub">медианный органический охват публикации · группы меньше 5 публикаций не сравниваем</span></div><ul class="keys" id="ct-keys" style="margin-bottom:16px"></ul><div id="ct-groups" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:8px 28px"></div></div>
+  <div class="bar0" id="ct-warn"></div>
+  <div class="card"><div class="chd"><h2>Что работает лучше</h2><span class="sub">сравниваем средний (медианный) органический охват публикаций за выбранный период</span></div><div class="qs" id="ct-q"></div></div>
   <div class="card c7"><div class="chd"><h2>Календарь публикаций</h2><span class="sub" id="cal-sub"></span></div><div id="ct-cal"></div><p class="note" id="cal-note"></p></div>
   <div class="card c5"><div class="chd"><h2>Как быстро пост набирает охват</h2></div><div id="ct-life"></div></div>
   <div class="card">
@@ -162,7 +175,7 @@ select{border:1px solid var(--line);border-radius:9px;padding:6px 8px;background
 <!-- СТОРИС -->
 <section class="panel" id="p-st" hidden>
   <div class="tiles" id="st-tiles"></div>
-  <div class="card"><div class="chd"><h2>Охват сторис по дням</h2><span class="sub">сумма за день, 30 дней</span></div><div class="chart" id="ch-st"></div></div>
+  <div class="card"><div class="chd"><h2>Охват сторис по дням</h2><span class="sub">сумма по всем сторис</span></div><div class="chart" id="ch-st"></div></div>
   <div class="card"><div class="chd"><h2>Серии сторис по дням</h2><span class="sub">первая и последняя сторис дня</span></div><div class="tbl" id="st-ser"></div></div>
   <div class="card"><div class="chd"><h2>Каждая сторис</h2><span class="sub" id="st-sub"></span></div><div class="tbl" id="st-tbl"></div>
   <p class="note">Instagram хранит статистику сторис только 24 часа. Мы снимаем её каждые 4 часа, поэтому история по каждой сторис копится с 27 октября 2026.</p></div>
@@ -170,22 +183,21 @@ select{border:1px solid var(--line);border-radius:9px;padding:6px 8px;background
 
 <!-- АУДИТОРИЯ И КОММЕНТАРИИ -->
 <section class="panel" id="p-au" hidden>
-  <div class="bar0"><div class="seg" id="au-per"><button data-p="7">7 дней</button><button data-p="30">30 дней</button><button data-p="90">90 дней</button></div><span class="note">период для комментариев</span></div>
   <div class="tiles" id="cm-tiles"></div>
   <div class="card c7"><div class="chd"><h2>Тон комментариев по неделям</h2></div><div class="legend" id="lg-tone"></div><div class="chart" id="ch-tone"></div></div>
   <div class="card c5"><div class="chd"><h2>На что жалуются</h2><span class="sub">негативные комментарии за период</span></div><div class="hb" id="cm-themes"></div></div>
   <div class="card"><div class="chd"><h2>Под какими постами жалуются</h2><span class="sub">за период, по числу негативных комментариев</span></div><div class="tbl" id="cm-posts"></div></div>
   <div class="card c6"><div class="chd"><h2>Возраст и пол подписчиков</h2></div><div class="legend" id="lg-age"></div><div class="chart" id="ch-age"></div></div>
   <div class="card c6"><div class="chd"><h2>Города</h2><span class="sub">доля подписчиков и доля охвата за этот месяц</span></div><div class="tbl" id="aud-city"></div></div>
-  <div class="card"><div class="chd"><h2>Нас отметили</h2><span class="sub">публикации других аккаунтов с @bellissimouz за 30 дней — кандидаты для UGC и коллабораций</span></div><div class="tbl" id="cm-tags"></div></div>
+  <div class="card"><div class="chd"><h2>Нас отметили</h2><span class="sub">публикации других аккаунтов с @bellissimouz за период — кандидаты для UGC и коллабораций</span></div><div class="tbl" id="cm-tags"></div></div>
 </section>
 
 <!-- КОНКУРЕНТЫ -->
 <section class="panel" id="p-cp" hidden>
-  <div class="card"><div class="chd"><h2>Мы и конкуренты</h2><span class="sub">публичные цифры за 30 дней</span></div><div class="tbl" id="comp-tbl"></div></div>
+  <div class="card"><div class="chd"><h2>Мы и конкуренты</h2><span class="sub">публичные цифры за выбранный период</span></div><div class="tbl" id="comp-tbl"></div></div>
   <div class="card c6"><div class="chd"><h2>Вовлечённость на 100 подписчиков</h2><span class="sub">медиана лайков и комментариев на публикацию</span></div><div class="hb" id="comp-er"></div></div>
-  <div class="card c6"><div class="chd"><h2>Публикаций в неделю</h2><span class="sub">последние 8 недель</span></div><div class="tbl" id="comp-wk"></div></div>
-  <div class="card"><div class="chd"><h2>Самые обсуждаемые публикации конкурентов</h2><span class="sub">14 дней</span></div><div class="tbl" id="comp-top"></div></div>
+  <div class="card c6"><div class="chd"><h2>Публикаций в неделю</h2><span class="sub">последние 8 недель периода</span></div><div class="tbl" id="comp-wk"></div></div>
+  <div class="card"><div class="chd"><h2>Самые обсуждаемые публикации конкурентов</h2><span class="sub">за период</span></div><div class="tbl" id="comp-top"></div></div>
 </section>
 
 <div class="foot" id="foot"></div>

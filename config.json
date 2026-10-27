@@ -1,0 +1,18 @@
+{
+  "ig_user": "17841401021949846",
+  "own_username": "bellissimouz",
+  "competitors": ["evosuzbekistan", "kfcinuzbekistan", "oqtepalavashuz", "maxwayuz", "choparpizza"],
+  "backfill_days": 365,
+  "media_days": 365,
+  "media_refresh_days": 45,
+  "comments_days": 90,
+  "rubrics": [
+    ["Розыгрыш", "розыгрыш, разыгрыва, конкурс, giveaway, yutib, yutuq, g'olib, golib, konkurs, sovrin"],
+    ["Вакансия", "ваканси, работа в, ish o'rni, vakansiya, xodim kerak, ishga taklif, ishga qabul"],
+    ["Новинка", "новинк, новый вкус, новая пицца, встречайте, yangilik, yangi ta'm, yangi pitsa, endi menyuda, tanishing"],
+    ["Акция / оффер", "акци, скидк, промокод, бонус, кэшбек, подарок, бесплатн, 1+1, aksiya, chegirma, promokod, bonus, sovg'a, bepul, keshbek, arzon"],
+    ["Филиал / открытие", "открыт, филиал, новый ресторан, ochildi, filial, yangi restoran, manzil"],
+    ["Праздник / событие", "праздник, поздравля, с днём, с днем, bayram, tabrik, muborak, mustaqillik, navro'z, navruz, ramazon, hayit"]
+  ],
+  "rubric_default": "Бренд / продукт"
+}

@@ -1,0 +1,18 @@
+  account 2026-09-08
+  account 2026-08-09
+  account 2026-07-10
+  account 2026-06-10
+  account 2026-05-11
+  account 2026-04-11
+  account 2026-03-12
+  account 2026-02-10
+  account 2026-01-11
+  account 2025-12-12
+  account 2025-11-12
+account {'ok': True, 'days_fetched': 346, 'followers': 276309, 'sec': 719}
+media {'ok': True, 'posts': 143, 'insights_updated': 111, 'sec': 112}
+stories {'ok': True, 'live_now': 5, 'total': 5, 'sec': 13}
+audience {'ok': True, 'sec': 7}
+comments {'ok': True, 'comments': 1934, 'sec': 82}
+tags {'ok': True, 'tags': 106, 'sec': 26}
+competitors {'ok': True, 'accounts': 6, 'sec': 10}

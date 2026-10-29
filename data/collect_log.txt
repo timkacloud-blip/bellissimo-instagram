@@ -1,8 +1,16 @@
-account {'ok': True, 'days_fetched': 4, 'followers': 276412, 'sec': 8}
-media {'ok': True, 'posts': 144, 'insights_updated': 21, 'sec': 13}
-stories {'ok': True, 'live_now': 2, 'total': 7, 'sec': 3}
-audience {'ok': True, 'sec': 4}
-comments {'ok': True, 'comments': 1937, 'sec': 64}
-tags {'ok': True, 'tags': 109, 'sec': 23}
-competitors {'ok': True, 'accounts': 6, 'sec': 6}
-ads {'ok': True, 'ads_checked': 1414, 'posts_in_ads': 45, 'sec': 42}
+account {'ok': True, 'days_fetched': 4, 'followers': 276408, 'sec': 7}
+media {'ok': True, 'posts': 144, 'insights_updated': 21, 'sec': 16}
+stories {'ok': True, 'live_now': 4, 'total': 9, 'sec': 9}
+audience {'ok': True, 'sec': 3}
+comments {'ok': True, 'comments': 1937, 'sec': 92}
+tags {'ok': True, 'tags': 110, 'sec': 33}
+competitors {'ok': True, 'accounts': 6, 'sec': 28}
+Traceback (most recent call last):
+  File "/home/runner/work/bellissimo-instagram/bellissimo-instagram/collector/collect.py", line 60, in run
+    info = fn() or {}; STATUS['blocks'][name] = {'ok': True, **info}
+           ^^^^
+  File "/home/runner/work/bellissimo-instagram/bellissimo-instagram/collector/collect.py", line 295, in ads
+    if 'error' in d: raise RuntimeError(d['error'].get('message', '')[:200])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Invalid parameter
+ads {'ok': False, 'error': 'Invalid parameter', 'sec': 15}

@@ -1,11 +1,11 @@
 {
- "started": "2026-10-29T10:58+05:00",
+ "started": "2026-10-29T20:17+05:00",
  "blocks": {
   "stories": {
    "ok": true,
-   "live_now": 4,
-   "total": 9,
-   "sec": 9
+   "live_now": 8,
+   "total": 15,
+   "sec": 13
   },
   "audience": {
    "ok": true,
@@ -14,35 +14,36 @@
   "tags": {
    "ok": true,
    "tags": 110,
-   "sec": 33
+   "sec": 21
   },
   "competitors": {
    "ok": true,
    "accounts": 6,
-   "sec": 28
+   "sec": 4
   },
   "media": {
    "ok": true,
-   "posts": 144,
-   "insights_updated": 21,
-   "sec": 16
+   "posts": 145,
+   "insights_updated": 22,
+   "sec": 12
   },
   "account": {
    "ok": true,
    "days_fetched": 4,
-   "followers": 276408,
+   "followers": 276492,
    "sec": 7
   },
   "comments": {
    "ok": true,
-   "comments": 1937,
-   "sec": 92
+   "comments": 1938,
+   "sec": 40
   },
   "ads": {
-   "ok": false,
-   "error": "Invalid parameter",
-   "sec": 15
+   "ok": true,
+   "ads_checked": 1519,
+   "posts_in_ads": 45,
+   "sec": 53
   }
  },
- "finished": "2026-10-29T11:02+05:00"
+ "finished": "2026-10-29T20:20+05:00"
 }

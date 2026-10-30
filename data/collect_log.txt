@@ -1,8 +1,8 @@
-account {'ok': True, 'days_fetched': 4, 'followers': 276532, 'sec': 11}
-media {'ok': True, 'posts': 145, 'insights_updated': 22, 'sec': 16}
-stories {'ok': True, 'live_now': 8, 'total': 15, 'sec': 19}
-audience {'ok': True, 'sec': 4}
-comments {'ok': True, 'comments': 1941, 'sec': 75}
-tags {'ok': True, 'tags': 110, 'sec': 34}
-competitors {'ok': True, 'accounts': 6, 'sec': 14}
-ads {'ok': True, 'ads_checked': 1531, 'posts_in_ads': 45, 'sec': 51}
+account {'ok': True, 'days_fetched': 4, 'followers': 276597, 'sec': 6}
+media {'ok': True, 'posts': 145, 'insights_updated': 22, 'sec': 13}
+stories {'ok': True, 'live_now': 6, 'total': 15, 'sec': 9}
+audience {'ok': True, 'sec': 3}
+comments {'ok': True, 'comments': 1940, 'sec': 51}
+tags {'ok': True, 'tags': 111, 'sec': 26}
+competitors {'ok': True, 'accounts': 6, 'sec': 7}
+ads {'ok': True, 'ads_checked': 1531, 'posts_in_ads': 45, 'sec': 46}

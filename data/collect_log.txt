@@ -1,7 +1,7 @@
-account {'ok': True, 'days_fetched': 4, 'followers': 276838, 'sec': 12}
-media {'ok': True, 'posts': 148, 'insights_updated': 22, 'sec': 38}
-stories {'ok': True, 'live_now': 5, 'total': 20, 'sec': 19}
-audience {'ok': True, 'sec': 6}
+account {'ok': True, 'days_fetched': 4, 'followers': 276927, 'sec': 11}
+media {'ok': True, 'posts': 148, 'insights_updated': 22, 'sec': 12}
+stories {'ok': True, 'live_now': 5, 'total': 20, 'sec': 9}
+audience {'ok': True, 'sec': 4}
 Traceback (most recent call last):
   File "/home/runner/work/bellissimo-instagram/bellissimo-instagram/collector/collect.py", line 60, in run
     info = fn() or {}; STATUS['blocks'][name] = {'ok': True, **info}
@@ -15,7 +15,7 @@ Traceback (most recent call last):
   File "/home/runner/work/bellissimo-instagram/bellissimo-instagram/collector/collect.py", line 30, in get
     raise RuntimeError(e.get('message', '')[:200].replace(TOKEN, '***'))
 RuntimeError: Unsupported get request. Object with ID '18093203558689428' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at 
-comments {'ok': False, 'error': "Unsupported get request. Object with ID '18093203558689428' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at ", 'sec': 196}
-tags {'ok': True, 'tags': 112, 'sec': 33}
-competitors {'ok': True, 'accounts': 6, 'sec': 14}
+comments {'ok': False, 'error': "Unsupported get request. Object with ID '18093203558689428' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at ", 'sec': 77}
+tags {'ok': True, 'tags': 113, 'sec': 29}
+competitors {'ok': True, 'accounts': 6, 'sec': 9}
 ads {'ok': True, 'ads_checked': 1581, 'posts_in_ads': 45, 'sec': 48}

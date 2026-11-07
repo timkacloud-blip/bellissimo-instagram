@@ -1,5 +1,5 @@
 {
- "started": "2026-11-08T01:18+05:00",
+ "started": "2026-11-08T04:40+05:00",
  "blocks": {
   "stories": {
    "ok": true,
@@ -9,7 +9,7 @@
   },
   "audience": {
    "ok": true,
-   "sec": 3
+   "sec": 2
   },
   "tags": {
    "ok": true,
@@ -25,25 +25,25 @@
    "ok": true,
    "posts": 153,
    "insights_updated": 25,
-   "sec": 12
+   "sec": 9
   },
   "account": {
    "ok": true,
    "days_fetched": 4,
-   "followers": 278339,
-   "sec": 6
+   "followers": 278349,
+   "sec": 4
   },
   "comments": {
    "ok": false,
    "error": "Unsupported get request. Object with ID '18093203558689428' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at ",
-   "sec": 47
+   "sec": 34
   },
   "ads": {
    "ok": true,
    "ads_checked": 1619,
    "posts_in_ads": 47,
-   "sec": 56
+   "sec": 55
   }
  },
- "finished": "2026-11-08T01:21+05:00"
+ "finished": "2026-11-08T04:42+05:00"
 }

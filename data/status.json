@@ -1,49 +1,49 @@
 {
- "started": "2026-11-25T19:34+05:00",
+ "started": "2026-11-26T05:30+05:00",
  "blocks": {
   "stories": {
    "ok": true,
    "live_now": 5,
    "total": 160,
-   "sec": 8
+   "sec": 9
   },
   "audience": {
    "ok": true,
-   "sec": 2
+   "sec": 4
   },
   "tags": {
    "ok": true,
    "tags": 174,
-   "sec": 18
+   "sec": 23
   },
   "competitors": {
    "ok": true,
    "accounts": 6,
-   "sec": 3
+   "sec": 5
   },
   "media": {
    "ok": true,
-   "posts": 168,
-   "insights_updated": 33,
-   "sec": 15
+   "posts": 169,
+   "insights_updated": 34,
+   "sec": 22
   },
   "account": {
    "ok": true,
    "days_fetched": 4,
-   "followers": 281196,
+   "followers": 281186,
    "sec": 7
   },
   "comments": {
    "ok": false,
    "error": "Unsupported get request. Object with ID '18152437828559754' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at ",
-   "sec": 24
+   "sec": 43
   },
   "ads": {
    "ok": true,
    "ads_checked": 1658,
    "posts_in_ads": 47,
-   "sec": 53
+   "sec": 54
   }
  },
- "finished": "2026-11-25T19:36+05:00"
+ "finished": "2026-11-26T05:33+05:00"
 }

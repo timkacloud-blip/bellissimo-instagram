@@ -1,8 +1,8 @@
-account {'ok': True, 'days_fetched': 4, 'followers': 281675, 'sec': 4}
-media {'ok': True, 'posts': 169, 'insights_updated': 32, 'sec': 12}
-story fail 18085257845349465 (#10) Not enough viewers for the media to show insights
-stories {'ok': True, 'live_now': 5, 'total': 170, 'sec': 6}
-audience {'ok': True, 'sec': 3}
+account {'ok': True, 'days_fetched': 4, 'followers': 281761, 'sec': 9}
+media {'ok': True, 'posts': 169, 'insights_updated': 31, 'sec': 21}
+story fail 18122969101977186 (#10) Not enough viewers for the media to show insights
+stories {'ok': True, 'live_now': 1, 'total': 171, 'sec': 3}
+audience {'ok': True, 'sec': 6}
 Traceback (most recent call last):
   File "/home/runner/work/bellissimo-instagram/bellissimo-instagram/collector/collect.py", line 60, in run
     info = fn() or {}; STATUS['blocks'][name] = {'ok': True, **info}
@@ -16,7 +16,7 @@ Traceback (most recent call last):
   File "/home/runner/work/bellissimo-instagram/bellissimo-instagram/collector/collect.py", line 30, in get
     raise RuntimeError(e.get('message', '')[:200].replace(TOKEN, '***'))
 RuntimeError: Unsupported get request. Object with ID '18152437828559754' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at 
-comments {'ok': False, 'error': "Unsupported get request. Object with ID '18152437828559754' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at ", 'sec': 31}
-tags {'ok': True, 'tags': 182, 'sec': 20}
-competitors {'ok': True, 'accounts': 6, 'sec': 3}
-ads {'ok': True, 'ads_checked': 1668, 'posts_in_ads': 47, 'sec': 44}
+comments {'ok': False, 'error': "Unsupported get request. Object with ID '18152437828559754' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at ", 'sec': 42}
+tags {'ok': True, 'tags': 186, 'sec': 33}
+competitors {'ok': True, 'accounts': 6, 'sec': 6}
+ads {'ok': True, 'ads_checked': 1668, 'posts_in_ads': 47, 'sec': 48}
